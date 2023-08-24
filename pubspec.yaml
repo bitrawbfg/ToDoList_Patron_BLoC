@@ -25,7 +25,10 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  flutter_bloc_devtools: ^0.1.1
+  bloc: ^8.1.2
+  flutter_bloc: ^8.1.3
+  hydrated_bloc: ^9.1.2
+  path_provider: ^2.1.0
 
 dev_dependencies:
 
