@@ -10,6 +10,7 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     on<AddTarea>(_onAddTarea);
     on<UpdateTarea>(_onUpdateTarea);
     on<DeleteTarea>(_onDeleteTarea);
+    on<RemoveTarea>(_onRemoveTarea);
   }
 
   void _onAddTarea(AddTarea event, Emitter<TareasState> emmit) {
@@ -18,6 +19,7 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
       allTareas: List.from(state.allTareas)..add(event.tarea),
+      removedTareas: state.removedTareas, // Evita que se borren las tareas de la papelera al añadir una nueva tarea
     ));
   }
 
@@ -30,14 +32,30 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     tarea.isFinalizada == false ? allTareas.insert(index, tarea.copyWith(isFinalizada: true)) : allTareas.insert(index, tarea.copyWith(isFinalizada: false));
 
     // ignore: invalid_use_of_visible_for_testing_member
-    emit(TareasState(allTareas: allTareas));
+    emit(TareasState(
+      allTareas: allTareas,
+      removedTareas: state.removedTareas,
+    ));
+  }
+
+  void _onRemoveTarea(RemoveTarea event, Emitter<TareasState> emmit) {
+    final state = this.state;
+
+    // ignore: invalid_use_of_visible_for_testing_member
+    emit(TareasState(
+      allTareas: List.from(state.allTareas)..remove(event.tarea),
+      removedTareas: List.from(state.removedTareas)..add(event.tarea.copyWith(isEliminada: true)),
+    ));
   }
 
   void _onDeleteTarea(DeleteTarea event, Emitter<TareasState> emmit) {
     final state = this.state;
 
     // ignore: invalid_use_of_visible_for_testing_member
-    emit(TareasState(allTareas: List.from(state.allTareas)..remove(event.tarea)));
+    emit(TareasState(
+      allTareas: state.allTareas,
+      removedTareas: List.from(state.removedTareas)..remove(event.tarea),
+    ));
   }
 
   @override

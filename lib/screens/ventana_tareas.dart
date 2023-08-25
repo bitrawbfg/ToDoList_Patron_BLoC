@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/blocs/bloc_exportaciones.dart';
 import 'package:lista_tareas/models/tarea.dart';
+import 'package:lista_tareas/screens/cajon_tareas.dart';
 import 'package:lista_tareas/screens/ventana_add_tarea.dart';
 import 'package:lista_tareas/widgets/lista_tareas.dart';
 
 class VentanaTareas extends StatefulWidget {
   const VentanaTareas({Key? key}) : super(key: key);
+  static const id = 'ventana_tareas';
 
   @override
   State<VentanaTareas> createState() => _VentanaTareasState();
@@ -38,13 +40,14 @@ class _VentanaTareasState extends State<VentanaTareas> {
               )
             ],
           ),
+          drawer: CajonTareas(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Center(
+              Center(
                 child: Chip(
                   label: Text(
-                    'Tareas:',
+                    '${state.allTareas.length} Tareas',
                   ),
                 ),
               ),

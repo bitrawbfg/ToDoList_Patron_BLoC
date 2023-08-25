@@ -29,6 +29,17 @@ class UpdateTarea extends TareasEvent {
   List<Object> get props => [tarea];
 }
 
+class RemoveTarea extends TareasEvent {
+  final Tarea tarea;
+
+  const RemoveTarea({
+    required this.tarea,
+  });
+
+  @override
+  List<Object> get props => [tarea];
+}
+
 class DeleteTarea extends TareasEvent {
   final Tarea tarea;
 

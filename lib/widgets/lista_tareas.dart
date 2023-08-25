@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/blocs/bloc_exportaciones.dart';
 import 'package:lista_tareas/models/tarea.dart';
+import 'package:lista_tareas/widgets/tile_tarea.dart';
 
 class ListaTareas extends StatelessWidget {
   const ListaTareas({
@@ -18,16 +18,7 @@ class ListaTareas extends StatelessWidget {
         itemBuilder: ((context, index) {
           var tarea = listaTareas[index];
 
-          return ListTile(
-            title: Text(tarea.titulo),
-            trailing: Checkbox(
-              value: tarea.isFinalizada,
-              onChanged: ((value) {
-                context.read<TareasBloc>().add(UpdateTarea(tarea: tarea));
-              }),
-            ),
-            onLongPress: () => context.read<TareasBloc>().add(DeleteTarea(tarea: tarea)),
-          );
+          return TileTarea(tarea: tarea);
         }),
       ),
     );

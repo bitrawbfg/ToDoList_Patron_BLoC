@@ -10,4 +10,9 @@ Este proyecto consiste en hacer una **lista de tareas** usando el patrón de dis
 - Marcar tareas como completadas.
 - Las tareas se guardan ***permanentemente*** (se usa [```HydratedBloc```](https://pub.dev/packages/hydrated_bloc) y [```PathProvider```](https://pub.dev/packages/path_provider) para almacenar los datos).
 
+- Añadir **Papelera de Tareas**
+  - Al eliminar las tareas de la lista se mueven a la *papelera*.
+  - Las tareas **no se pueden modificar** desde aquí.
+- Añadir **menú lateral** con la *lista de tareas* y *papelera*, ambos con contadores.
+
 ## Mejoras
