@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/blocs/bloc_exportaciones.dart';
 import 'package:lista_tareas/screens/papelera.dart';
-import 'package:lista_tareas/screens/ventana_tareas.dart';
+import 'package:lista_tareas/screens/ventana_pestanyas.dart';
+import 'package:lista_tareas/screens/ventana_tareas_pendientes.dart';
 
 class CajonTareas extends StatelessWidget {
   const CajonTareas({super.key});
@@ -27,11 +28,13 @@ class CajonTareas extends StatelessWidget {
             BlocBuilder<TareasBloc, TareasState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacementNamed(VentanaTareas.id),
+                  onTap: () => Navigator.of(context).pushReplacementNamed(
+                    VentanaPestanyas.id,
+                  ),
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text('Mis Tareas'),
-                    trailing: Text('${state.allTareas.length}'),
+                    trailing: Text('${state.tareasPendientes.length} | ${state.tareasCompletadas.length}'),
                   ),
                 );
               },
@@ -40,11 +43,13 @@ class CajonTareas extends StatelessWidget {
             BlocBuilder<TareasBloc, TareasState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacementNamed(Papelera.id),
+                  onTap: () => Navigator.of(context).pushReplacementNamed(
+                    Papelera.id,
+                  ),
                   child: ListTile(
                     leading: const Icon(Icons.delete),
                     title: const Text('Papelera'),
-                    trailing: Text('${state.removedTareas.length}'),
+                    trailing: Text('${state.tareasEliminadas.length}'),
                   ),
                 );
               },

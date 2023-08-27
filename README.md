@@ -21,4 +21,15 @@ Este proyecto consiste en hacer una **lista de tareas** usando el patrón de dis
 
 - Añadir temas **claro** y **oscuro**.
 
+  ---
+
+- Añadir ```BottomNavigationBar``` con las siguientes 'ventanas':
+  - Tareas Pendientes.
+  - Tareas Completadas.
+  - Tareas Favoritas.
+
+- Añadir listas de tareas pendientes, completadas y favoritas.
+
+---
+
 ## Mejoras

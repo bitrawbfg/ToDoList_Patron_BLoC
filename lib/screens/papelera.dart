@@ -28,10 +28,10 @@ class Papelera extends StatelessWidget {
             children: [
               Center(
                 child: Chip(
-                  label: Text('${state.removedTareas.length} Tareas'),
+                  label: Text('${state.tareasEliminadas.length} Tareas'),
                 ),
               ),
-              ListaTareas(listaTareas: state.removedTareas),
+              ListaTareas(listaTareas: state.tareasEliminadas),
             ],
           ),
         );

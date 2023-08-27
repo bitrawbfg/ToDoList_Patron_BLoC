@@ -18,23 +18,37 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
 
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
-      allTareas: List.from(state.allTareas)..add(event.tarea),
-      removedTareas: state.removedTareas, // Evita que se borren las tareas de la papelera al añadir una nueva tarea
+      // allTareas: List.from(state.allTareas)..add(event.tarea),
+      tareasPendientes: List.from(state.tareasPendientes)..add(event.tarea),
+      tareasCompletadas: state.tareasCompletadas,
+      tareasFavoritas: state.tareasFavoritas,
+      tareasEliminadas: state.tareasEliminadas, // Evita que se borren las tareas de la papelera al añadir una nueva tarea
     ));
   }
 
   void _onUpdateTarea(UpdateTarea event, Emitter<TareasState> emmit) {
     final state = this.state;
     final tarea = event.tarea;
-    final int index = state.allTareas.indexOf(tarea);
 
-    List<Tarea> allTareas = List.from(state.allTareas)..remove(tarea);
-    tarea.isFinalizada == false ? allTareas.insert(index, tarea.copyWith(isFinalizada: true)) : allTareas.insert(index, tarea.copyWith(isFinalizada: false));
+    List<Tarea> tareasPendientes = state.tareasPendientes;
+    List<Tarea> tareasCompletadas = state.tareasCompletadas;
+    List<Tarea> tareasFavoritas = state.tareasFavoritas;
+    tarea.isFinalizada == false
+        ? {
+            tareasPendientes = List.from(tareasPendientes)..remove(tarea),
+            tareasCompletadas = List.from(tareasCompletadas)..insert(0, tarea.copyWith(isFinalizada: true)),
+          }
+        : {
+            tareasCompletadas = List.from(tareasCompletadas)..remove(tarea),
+            tareasPendientes = List.from(tareasPendientes)..insert(0, tarea.copyWith(isFinalizada: false)),
+          };
 
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
-      allTareas: allTareas,
-      removedTareas: state.removedTareas,
+      tareasCompletadas: tareasCompletadas,
+      tareasPendientes: tareasPendientes,
+      tareasFavoritas: tareasFavoritas,
+      tareasEliminadas: state.tareasEliminadas,
     ));
   }
 
@@ -43,8 +57,11 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
 
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
-      allTareas: List.from(state.allTareas)..remove(event.tarea),
-      removedTareas: List.from(state.removedTareas)..add(event.tarea.copyWith(isEliminada: true)),
+      // allTareas: List.from(state.allTareas)..remove(event.tarea),
+      tareasCompletadas: List.from(state.tareasCompletadas)..remove(event.tarea),
+      tareasFavoritas: List.from(state.tareasFavoritas)..remove(event.tarea),
+      tareasPendientes: List.from(state.tareasPendientes)..remove(event.tarea),
+      tareasEliminadas: List.from(state.tareasEliminadas)..add(event.tarea),
     ));
   }
 
@@ -53,8 +70,11 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
 
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
-      allTareas: state.allTareas,
-      removedTareas: List.from(state.removedTareas)..remove(event.tarea),
+      // allTareas: state.allTareas,
+      tareasPendientes: state.tareasPendientes,
+      tareasCompletadas: state.tareasCompletadas,
+      tareasFavoritas: state.tareasFavoritas,
+      tareasEliminadas: List.from(state.tareasEliminadas)..remove(event.tarea),
     ));
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tareas/screens/ventana_tareas.dart';
+import 'package:lista_tareas/screens/ventana_pestanyas.dart';
+import 'package:lista_tareas/screens/ventana_tareas_pendientes.dart';
 import 'package:lista_tareas/services/app_router.dart';
 import 'package:lista_tareas/services/app_theme.dart';
 import 'package:path_provider/path_provider.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Lista de tareas',
             theme: state.valorSwitch ? AppThemes.appThemeData[AppTheme.darkTheme] : AppThemes.appThemeData[AppTheme.lightTheme],
-            home: const VentanaTareas(),
+            home: VentanaPestanyas(),
             onGenerateRoute: appRouter.onGenerateRoute,
           );
         },
