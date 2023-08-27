@@ -27,7 +27,7 @@ class CajonTareas extends StatelessWidget {
             BlocBuilder<TareasBloc, TareasState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(VentanaTareas.id),
+                  onTap: () => Navigator.of(context).pushReplacementNamed(VentanaTareas.id),
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text('Mis Tareas'),
@@ -40,7 +40,7 @@ class CajonTareas extends StatelessWidget {
             BlocBuilder<TareasBloc, TareasState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).pushNamed(Papelera.id),
+                  onTap: () => Navigator.of(context).pushReplacementNamed(Papelera.id),
                   child: ListTile(
                     leading: const Icon(Icons.delete),
                     title: const Text('Papelera'),
@@ -49,6 +49,16 @@ class CajonTareas extends StatelessWidget {
                 );
               },
             ),
+            BlocBuilder<SwitchBloc, SwitchState>(
+              builder: (context, state) {
+                return Switch(
+                  value: state.valorSwitch,
+                  onChanged: (newValue) {
+                    newValue ? context.read<SwitchBloc>().add(SwitchOnEvent()) : context.read<SwitchBloc>().add(SwitchOffEvent());
+                  },
+                );
+              },
+            )
           ],
         ),
       ),

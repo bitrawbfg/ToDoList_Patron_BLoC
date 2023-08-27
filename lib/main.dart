@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/screens/ventana_tareas.dart';
 import 'package:lista_tareas/services/app_router.dart';
+import 'package:lista_tareas/services/app_theme.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'blocs/bloc_exportaciones.dart';
@@ -23,15 +24,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TareasBloc(),
-      child: MaterialApp(
-        title: 'Lista de tareas',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const VentanaTareas(),
-        onGenerateRoute: appRouter.onGenerateRoute,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => TareasBloc()),
+        BlocProvider(create: (context) => SwitchBloc()),
+      ],
+      child: BlocBuilder<SwitchBloc, SwitchState>(
+        builder: (context, state) {
+          return MaterialApp(
+            title: 'Lista de tareas',
+            theme: state.valorSwitch ? AppThemes.appThemeData[AppTheme.darkTheme] : AppThemes.appThemeData[AppTheme.lightTheme],
+            home: const VentanaTareas(),
+            onGenerateRoute: appRouter.onGenerateRoute,
+          );
+        },
       ),
     );
   }
