@@ -12,6 +12,8 @@ class VentanaAddTarea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController controladorTitulo = TextEditingController();
+    TextEditingController controladorDescripcion = TextEditingController();
+
     return Container(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -30,11 +32,27 @@ class VentanaAddTarea extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+              ),
+              child: TextField(
+                autofocus: true,
+                controller: controladorTitulo,
+                decoration: const InputDecoration(
+                  label: Text('Título'),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
             TextField(
               autofocus: true,
-              controller: controladorTitulo,
+              controller: controladorDescripcion,
+              minLines: 3,
+              maxLines: 5,
               decoration: const InputDecoration(
-                label: Text('Título'),
+                label: Text('Descripción'),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -50,6 +68,7 @@ class VentanaAddTarea extends StatelessWidget {
                     var tarea = Tarea(
                       id: GUIDGen.generate(),
                       titulo: controladorTitulo.text,
+                      descripcion: controladorDescripcion.text,
                     );
 
                     context.read<TareasBloc>().add(AddTarea(tarea: tarea));

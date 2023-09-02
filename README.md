@@ -30,6 +30,19 @@ Este proyecto consiste en hacer una **lista de tareas** usando el patrón de dis
 
 - Añadir listas de tareas pendientes, completadas y favoritas.
 
+  ---
+
+- Añadir campo ```Descripción``` a las tareas.
+- Modificar aspecto de las tareas.
+  - Al pulsar sobre la flecha de la tarea aparece la descripción de dicha tarea.
+
 ---
 
 ## Mejoras
+
+---
+
+## Bugs
+
+- Cuando se intenta eliminar una tarea de la papelera se duplica.
+  - El ```ExpansionPanel``` **no permite elementos duplicados** con lo cuál deja de mostrar la lista de las tareas eliminadas (Papelera).

@@ -15,14 +15,8 @@ class Papelera extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Papelera'),
-            actions: [
-              IconButton(
-                onPressed: () => {},
-                icon: const Icon(Icons.add),
-              )
-            ],
           ),
-          drawer: CajonTareas(),
+          drawer: const CajonTareas(),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

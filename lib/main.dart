@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lista_tareas/screens/ventana_pestanyas.dart';
-import 'package:lista_tareas/screens/ventana_tareas_pendientes.dart';
 import 'package:lista_tareas/services/app_router.dart';
 import 'package:lista_tareas/services/app_theme.dart';
 import 'package:path_provider/path_provider.dart';

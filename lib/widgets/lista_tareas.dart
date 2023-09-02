@@ -13,14 +13,47 @@ class ListaTareas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        itemCount: listaTareas.length,
-        itemBuilder: ((context, index) {
-          var tarea = listaTareas[index];
-
-          return TileTarea(tarea: tarea);
-        }),
+      child: SingleChildScrollView(
+        child: ExpansionPanelList.radio(
+          children: listaTareas
+              .map((tarea) => ExpansionPanelRadio(
+                    value: tarea.id,
+                    headerBuilder: (context, isAbierta) => TileTarea(tarea: tarea),
+                    body: ListTile(
+                      title: SelectableText.rich(
+                        TextSpan(
+                          children: [
+                            const TextSpan(
+                              text: 'Text\n',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(text: tarea.titulo),
+                            const TextSpan(
+                              text: '\n\nDescripción\n',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            TextSpan(text: tarea.descripcion)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ))
+              .toList(),
+        ),
       ),
     );
   }
 }
+
+/*
+Expanded(
+  child: ListView.builder(
+    itemCount: listaTareas.length,
+    itemBuilder: ((context, index) {
+      var tarea = listaTareas[index];
+
+      return TileTarea(tarea: tarea);
+    }),
+  ),
+);
+*/

@@ -19,6 +19,7 @@ class TileTarea extends StatelessWidget {
     return ListTile(
       title: Text(
         tarea.titulo,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(
           decoration: tarea.isFinalizada! ? TextDecoration.lineThrough : null,
         ),

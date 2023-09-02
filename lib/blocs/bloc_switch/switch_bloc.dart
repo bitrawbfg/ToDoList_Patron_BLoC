@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:lista_tareas/blocs/bloc_exportaciones.dart';
-import '../bloc_exportaciones.dart';
 
 part 'switch_event.dart';
 part 'switch_state.dart';

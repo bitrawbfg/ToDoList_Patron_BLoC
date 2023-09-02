@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lista_tareas/blocs/bloc_exportaciones.dart';
 import 'package:lista_tareas/screens/papelera.dart';
 import 'package:lista_tareas/screens/ventana_pestanyas.dart';
-import 'package:lista_tareas/screens/ventana_tareas_pendientes.dart';
 
 class CajonTareas extends StatelessWidget {
   const CajonTareas({super.key});
