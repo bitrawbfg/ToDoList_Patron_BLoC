@@ -46,5 +46,5 @@ Este proyecto consiste en hacer una **lista de tareas** usando el patrón de dis
 
 ## Bugs Solucionados
 
-- [#]() Cuando se intenta eliminar una tarea de la papelera se duplica.
+- [[ca137f53]](https://github.com/bitrawbfg/ToDoList_Patron_BLoC/commit/ca137f53cca14edc22efd12d7c61a8fd8e421dd4) Cuando se intenta eliminar una tarea de la papelera se duplica.
   - El ```ExpansionPanel``` **no permite elementos duplicados** con lo cuál deja de mostrar la lista de las tareas eliminadas (Papelera).
