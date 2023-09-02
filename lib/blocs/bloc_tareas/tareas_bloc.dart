@@ -61,7 +61,7 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
       tareasCompletadas: List.from(state.tareasCompletadas)..remove(event.tarea),
       tareasFavoritas: List.from(state.tareasFavoritas)..remove(event.tarea),
       tareasPendientes: List.from(state.tareasPendientes)..remove(event.tarea),
-      tareasEliminadas: List.from(state.tareasEliminadas)..add(event.tarea),
+      tareasEliminadas: List.from(state.tareasEliminadas)..add(event.tarea.copyWith(isEliminada: true)),
     ));
   }
 

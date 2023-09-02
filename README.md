@@ -44,5 +44,7 @@ Este proyecto consiste en hacer una **lista de tareas** usando el patrón de dis
 
 ## Bugs
 
-- Cuando se intenta eliminar una tarea de la papelera se duplica.
+## Bugs Solucionados
+
+- [#]() Cuando se intenta eliminar una tarea de la papelera se duplica.
   - El ```ExpansionPanel``` **no permite elementos duplicados** con lo cuál deja de mostrar la lista de las tareas eliminadas (Papelera).
