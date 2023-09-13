@@ -11,6 +11,7 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     on<UpdateTarea>(_onUpdateTarea);
     on<DeleteTarea>(_onDeleteTarea);
     on<RemoveTarea>(_onRemoveTarea);
+    on<MarkUnmarkFavoriteTarea>(_onMarkUnmarkFavoriteTarea);
   }
 
   void _onAddTarea(AddTarea event, Emitter<TareasState> emmit) {
@@ -76,6 +77,62 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
       tareasFavoritas: state.tareasFavoritas,
       tareasEliminadas: List.from(state.tareasEliminadas)..remove(event.tarea),
     ));
+  }
+
+  void _onMarkUnmarkFavoriteTarea(MarkUnmarkFavoriteTarea event, Emitter<TareasState> emmit) {
+    final state = this.state;
+
+    List<Tarea> tareasPendientes = state.tareasPendientes;
+    List<Tarea> tareasCompletadas = state.tareasCompletadas;
+    List<Tarea> tareasFavoritas = state.tareasFavoritas;
+
+    if (event.tarea.isFinalizada == false) {
+      if (event.tarea.isFavorita == false) {
+        var indexTarea = tareasPendientes.indexOf(event.tarea);
+
+        tareasPendientes = List.from(tareasPendientes)
+          ..remove(event.tarea)
+          ..insert(indexTarea, event.tarea.copyWith(isFavorita: true));
+
+        tareasFavoritas.insert(0, event.tarea.copyWith(isFavorita: true));
+      } else {
+        var indexTarea = tareasPendientes.indexOf(event.tarea);
+
+        tareasPendientes = List.from(tareasPendientes)
+          ..remove(event.tarea)
+          ..insert(indexTarea, event.tarea.copyWith(isFavorita: false));
+
+        tareasFavoritas.remove(event.tarea);
+      }
+    } else {
+      if (event.tarea.isFavorita == false) {
+        var indexTarea = tareasCompletadas.indexOf(event.tarea);
+
+        tareasCompletadas = List.from(tareasCompletadas)
+          ..remove(event.tarea)
+          ..insert(indexTarea, event.tarea.copyWith(isFavorita: true));
+
+        tareasFavoritas.insert(0, event.tarea.copyWith(isFavorita: true));
+      } else {
+        var indexTarea = tareasCompletadas.indexOf(event.tarea);
+
+        tareasCompletadas = List.from(tareasCompletadas)
+          ..remove(event.tarea)
+          ..insert(indexTarea, event.tarea.copyWith(isFavorita: false));
+
+        tareasFavoritas.remove(event.tarea);
+      }
+    }
+
+    // ignore: invalid_use_of_visible_for_testing_member
+    emit(
+      TareasState(
+        tareasPendientes: tareasPendientes,
+        tareasCompletadas: tareasCompletadas,
+        tareasFavoritas: tareasFavoritas,
+        tareasEliminadas: state.tareasEliminadas,
+      ),
+    );
   }
 
   @override

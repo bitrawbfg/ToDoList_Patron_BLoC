@@ -5,34 +5,43 @@ class Tarea extends Equatable {
   final String id;
   final String titulo;
   final String descripcion;
+  final String fecha;
   bool? isFinalizada;
   bool? isEliminada;
+  bool? isFavorita;
 
   Tarea({
     required this.id,
     required this.titulo,
     required this.descripcion,
+    required this.fecha,
     this.isFinalizada,
     this.isEliminada,
+    this.isFavorita,
   }) {
     /*Esto permite inicializar los valores*/
     isFinalizada = isFinalizada ?? false;
     isEliminada = isEliminada ?? false;
+    isFavorita = isFavorita ?? false;
   }
 
   Tarea copyWith({
     String? id,
     String? titulo,
     String? descripcion,
+    String? fecha,
     bool? isFinalizada,
     bool? isEliminada,
+    bool? isFavorita,
   }) {
     return Tarea(
       id: id ?? this.id,
       titulo: titulo ?? this.titulo,
       descripcion: descripcion ?? this.descripcion,
+      fecha: fecha ?? this.fecha,
       isFinalizada: isFinalizada ?? this.isFinalizada,
       isEliminada: isEliminada ?? this.isEliminada,
+      isFavorita: isFavorita ?? this.isFavorita,
     );
   }
 
@@ -41,8 +50,10 @@ class Tarea extends Equatable {
       'id': id,
       'titulo': titulo,
       'descripcion': descripcion,
+      'fecha': fecha,
       'isFinalizada': isFinalizada,
       'isEliminada': isEliminada,
+      'isFavorita': isFavorita,
     };
   }
 
@@ -51,8 +62,10 @@ class Tarea extends Equatable {
       id: map['id'] ?? '',
       titulo: map['titulo'] ?? '',
       descripcion: map['descripcion'] ?? '',
+      fecha: map['fecha'] ?? '',
       isFinalizada: map['isFinalizada'],
       isEliminada: map['isEliminada'],
+      isFavorita: map['isFavorita'],
     );
   }
 
@@ -61,7 +74,9 @@ class Tarea extends Equatable {
         id,
         titulo,
         descripcion,
+        fecha,
         isFinalizada,
         isEliminada,
+        isFavorita,
       ];
 }

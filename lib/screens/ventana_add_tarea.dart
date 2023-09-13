@@ -69,6 +69,7 @@ class VentanaAddTarea extends StatelessWidget {
                       id: GUIDGen.generate(),
                       titulo: controladorTitulo.text,
                       descripcion: controladorDescripcion.text,
+                      fecha: DateTime.now().toString(),
                     );
 
                     context.read<TareasBloc>().add(AddTarea(tarea: tarea));
