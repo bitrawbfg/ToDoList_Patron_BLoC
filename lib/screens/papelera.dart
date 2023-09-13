@@ -15,6 +15,20 @@ class Papelera extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Papelera'),
+            actions: [
+              PopupMenuButton(
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: TextButton.icon(
+                      onPressed: null,
+                      icon: const Icon(Icons.delete_forever),
+                      label: const Text('Eliminar todas las tareas'),
+                    ),
+                    onTap: () => context.read<TareasBloc>().add(DeleteAllTareas()),
+                  ),
+                ],
+              ),
+            ],
           ),
           drawer: const CajonTareas(),
           body: Column(

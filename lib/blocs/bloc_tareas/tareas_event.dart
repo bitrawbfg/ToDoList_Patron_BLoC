@@ -61,3 +61,32 @@ class MarkUnmarkFavoriteTarea extends TareasEvent {
   @override
   List<Object> get props => [tarea];
 }
+
+class EditTarea extends TareasEvent {
+  final Tarea tareaAntigua;
+  final Tarea tareaNueva;
+
+  const EditTarea({
+    required this.tareaAntigua,
+    required this.tareaNueva,
+  });
+
+  @override
+  List<Object> get props => [
+        tareaAntigua,
+        tareaNueva,
+      ];
+}
+
+class RestoreTarea extends TareasEvent {
+  final Tarea tarea;
+
+  const RestoreTarea({
+    required this.tarea,
+  });
+
+  @override
+  List<Object> get props => [tarea];
+}
+
+class DeleteAllTareas extends TareasEvent {}

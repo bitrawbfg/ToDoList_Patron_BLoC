@@ -4,13 +4,17 @@ import 'package:lista_tareas/models/tarea.dart';
 class PopupMenu extends StatelessWidget {
   final Tarea tarea;
   final VoidCallback cancelOrDeleteCallback;
-  final VoidCallback likeOrDislike;
+  final VoidCallback likeOrDislikeCallback;
+  final VoidCallback editTareaCallback;
+  final VoidCallback restoreTareaCallback;
 
   const PopupMenu({
     Key? key,
     required this.tarea,
     required this.cancelOrDeleteCallback,
-    required this.likeOrDislike,
+    required this.likeOrDislikeCallback,
+    required this.editTareaCallback,
+    required this.restoreTareaCallback,
   }) : super(key: key);
 
   @override
@@ -19,15 +23,15 @@ class PopupMenu extends StatelessWidget {
       itemBuilder: tarea.isEliminada == false
           ? (context) => [
                 PopupMenuItem(
+                  onTap: editTareaCallback,
                   child: TextButton.icon(
-                    onPressed: null,
+                    onPressed: editTareaCallback,
                     icon: const Icon(Icons.edit),
                     label: const Text('Editar'),
                   ),
-                  onTap: () {},
                 ),
                 PopupMenuItem(
-                  onTap: likeOrDislike,
+                  onTap: likeOrDislikeCallback,
                   child: TextButton.icon(
                     onPressed: null,
                     icon: tarea.isFavorita == false
@@ -53,12 +57,12 @@ class PopupMenu extends StatelessWidget {
               ]
           : (context) => [
                 PopupMenuItem(
+                  onTap: restoreTareaCallback,
                   child: TextButton.icon(
                     onPressed: null,
                     icon: const Icon(Icons.restore),
                     label: const Text('Restaurar'),
                   ),
-                  onTap: () {},
                 ),
                 PopupMenuItem(
                   onTap: cancelOrDeleteCallback,

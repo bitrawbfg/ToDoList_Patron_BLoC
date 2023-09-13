@@ -12,6 +12,9 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     on<DeleteTarea>(_onDeleteTarea);
     on<RemoveTarea>(_onRemoveTarea);
     on<MarkUnmarkFavoriteTarea>(_onMarkUnmarkFavoriteTarea);
+    on<EditTarea>(_onEditTarea);
+    on<RestoreTarea>(_onRestoreTarea);
+    on<DeleteAllTareas>(_onDeleteAllTareas);
   }
 
   void _onAddTarea(AddTarea event, Emitter<TareasState> emmit) {
@@ -34,15 +37,48 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
     List<Tarea> tareasPendientes = state.tareasPendientes;
     List<Tarea> tareasCompletadas = state.tareasCompletadas;
     List<Tarea> tareasFavoritas = state.tareasFavoritas;
-    tarea.isFinalizada == false
+
+    /*tarea.isFinalizada == false
         ? {
-            tareasPendientes = List.from(tareasPendientes)..remove(tarea),
-            tareasCompletadas = List.from(tareasCompletadas)..insert(0, tarea.copyWith(isFinalizada: true)),
+            if (tarea.isFavorita == false)
+              {
+                tareasPendientes = List.from(tareasPendientes)..remove(tarea),
+                // tareasCompletadas = List.from(tareasCompletadas)..insert(0, tarea.copyWith(isFinalizada: true)),
+                tareasCompletadas.insert(0, tarea.copyWith(isFinalizada: true))
+              }
           }
         : {
             tareasCompletadas = List.from(tareasCompletadas)..remove(tarea),
             tareasPendientes = List.from(tareasPendientes)..insert(0, tarea.copyWith(isFinalizada: false)),
-          };
+          };*/
+
+    if (tarea.isFinalizada == false) {
+      if (tarea.isFavorita == false) {
+        tareasPendientes = List.from(tareasPendientes)..remove(tarea);
+        tareasCompletadas.insert(0, tarea.copyWith(isFinalizada: true));
+      } else {
+        var indexTarea = tareasFavoritas.indexOf(tarea);
+
+        tareasPendientes = List.from(tareasPendientes)..remove(tarea);
+        tareasCompletadas.insert(0, tarea.copyWith(isFinalizada: true));
+        tareasFavoritas = List.from(tareasFavoritas)
+          ..remove(tarea)
+          ..insert(indexTarea, tarea.copyWith(isFinalizada: true));
+      }
+    } else {
+      if (tarea.isFavorita == false) {
+        tareasCompletadas = List.from(tareasCompletadas)..remove(tarea);
+        tareasPendientes = List.from(tareasPendientes)..insert(0, tarea.copyWith(isFinalizada: false));
+      } else {
+        var indexTarea = tareasFavoritas.indexOf(tarea);
+
+        tareasCompletadas = List.from(tareasCompletadas)..remove(tarea);
+        tareasPendientes = List.from(tareasPendientes)..insert(0, tarea.copyWith(isFinalizada: false));
+        tareasFavoritas = List.from(tareasFavoritas)
+          ..remove(tarea)
+          ..insert(indexTarea, tarea.copyWith(isFinalizada: false));
+      }
+    }
 
     // ignore: invalid_use_of_visible_for_testing_member
     emit(TareasState(
@@ -131,6 +167,62 @@ class TareasBloc extends HydratedBloc<TareasEvent, TareasState> {
         tareasCompletadas: tareasCompletadas,
         tareasFavoritas: tareasFavoritas,
         tareasEliminadas: state.tareasEliminadas,
+      ),
+    );
+  }
+
+  void _onEditTarea(EditTarea event, Emitter<TareasState> emit) {
+    final state = this.state;
+    List<Tarea> tareasFavoritas = state.tareasFavoritas;
+
+    if (event.tareaAntigua.isFavorita == true) {
+      tareasFavoritas
+        ..remove(event.tareaAntigua)
+        ..insert(0, event.tareaNueva);
+    }
+
+    emit(
+      TareasState(
+        tareasPendientes: List.from(state.tareasPendientes)
+          ..remove(event.tareaAntigua)
+          ..insert(0, event.tareaNueva),
+        tareasCompletadas: state.tareasCompletadas..remove(event.tareaAntigua),
+        tareasFavoritas: tareasFavoritas,
+        tareasEliminadas: state.tareasEliminadas,
+      ),
+    );
+  }
+
+  void _onRestoreTarea(RestoreTarea event, Emitter<TareasState> emit) {
+    final state = this.state;
+
+    emit(
+      TareasState(
+        tareasEliminadas: List.from(state.tareasEliminadas)..remove(event.tarea),
+        tareasPendientes: List.from(state.tareasPendientes)
+          ..insert(
+            0,
+            event.tarea.copyWith(
+              isEliminada: false,
+              isFinalizada: false,
+              isFavorita: false,
+            ),
+          ),
+        tareasCompletadas: state.tareasCompletadas,
+        tareasFavoritas: state.tareasFavoritas,
+      ),
+    );
+  }
+
+  void _onDeleteAllTareas(DeleteAllTareas event, Emitter<TareasState> emit) {
+    final state = this.state;
+
+    emit(
+      TareasState(
+        tareasEliminadas: List.from(state.tareasEliminadas)..clear(),
+        tareasPendientes: state.tareasPendientes,
+        tareasCompletadas: state.tareasCompletadas,
+        tareasFavoritas: state.tareasFavoritas,
       ),
     );
   }
